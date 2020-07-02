@@ -19,6 +19,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::middleware('auth')->namespace('Admin')->group(function(){
+    Route::resource('post','PostController');
+    Route::resource('video','VideoController');
+});
+
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
 

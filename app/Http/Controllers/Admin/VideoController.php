@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Video;
+use Brian2694\Toastr\Facades\Toastr;
 
 class VideoController extends Controller
 {
@@ -14,7 +16,8 @@ class VideoController extends Controller
      */
     public function index()
     {
-        //
+        $videos = Video::orderBy('video_title','asc')->get();
+        return view('admin.videos.index',compact('videos'));
     }
 
     /**
@@ -24,7 +27,7 @@ class VideoController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.videos.create');
     }
 
     /**
@@ -35,7 +38,26 @@ class VideoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'video_title'=>'required|unique:videos',
+            'video_link'=>'required',
+            'body'=>'required'
+        ]);
+
+        $video = new Video();
+        $video->video_title = $request->video_title;
+        $video->video_link = $request->video_link;
+        $video->body = $request->body;
+
+        if(isset($request->publish)){
+            $video->publish = true;
+        }else{
+            $video->publish = false;      
+        }
+        $video->save();
+
+        Toastr::success('Video Saved Successfully','Success');
+        return redirect()->route('video.index');
     }
 
     /**
