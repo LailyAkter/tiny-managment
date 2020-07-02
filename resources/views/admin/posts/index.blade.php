@@ -31,7 +31,7 @@
                         <tr>
                             <th>SL</th>
                             <th>Title</th>
-                            <th>Share Options</th>
+                            <th>Image</th>
                             <th>Publish</th>
                             <th>Action</th>
                         </tr>

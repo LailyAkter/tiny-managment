@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Post;
+use App\Video;
 
 class DashboardController extends Controller
 {
@@ -23,6 +25,8 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard');
+        $post = Post::latest()->get();
+        $video = Video::latest()->get();
+        return view('admin.dashboard',compact('post','video'));
     }
 }

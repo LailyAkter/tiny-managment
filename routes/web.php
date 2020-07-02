@@ -13,15 +13,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/','HomeController@index');
+Route::get('/video/details/{id}','HomeController@video_show');
+Route::get('/post/details/{id}','HomeController@post_show');
 
 Auth::routes();
 
 Route::middleware('auth')->namespace('Admin')->group(function(){
     Route::resource('post','PostController');
     Route::resource('video','VideoController');
+    
+    Route::get('/profile','SettingController@profile');
+    Route::post('/profile/update','SettingController@profileUpdate');
+    Route::get('/password/change','SettingController@passwordChange');
+    Route::post('change/password','SettingController@changePassword');
 });
 
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');

@@ -17,7 +17,7 @@ class CreatePostsTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug');
-            $table->string('image')->default('default.png');
+            $table->string('image');
             $table->string('share_options')->nullable();
             $table->boolean('publish')->default(0);
             $table->timestamps();

@@ -33,10 +33,9 @@
                                 <input 
                                     type="file" 
                                     id="inputName" 
-                                    class="form-control" 
+                                    class="form-control @error('image') is-invalid @enderror" 
                                     name='image'
                                     placeholder='Feature Image'
-                                    value="{{old('image')}}"
                                 />
                                 @if($errors->has('image'))
                                     <span class='invalid-feedback'>Image is Required</span>

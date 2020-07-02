@@ -49,6 +49,7 @@ class PostController extends Controller
 
         // get form images
         $image = $request->file('image');
+        // dd($image);
         $slug = Str::slug($request->title);
 
         if(isset($image)){
@@ -57,13 +58,12 @@ class PostController extends Controller
         $imageName = $slug.'-'.$currentDate.'-'.uniqid().'.'.$image->getClientOriginalExtension();
 
         // check category directory is exists
-        if(!Storage::disk('public')->exists('posts')){
-            Storage::disk('public')->makeDirectory('posts');
+        if(!Storage::disk('public')->exists('Post')){
+            Storage::disk('public')->makeDirectory('Post');
         }
-        // resize image for posts and is_uploaded_file
-        $posts = Image::make($image)->resize(1600,479)->stream();
-        Storage::disk('public')->put('posts/'.$imageName,$posts);
-
+            // resize image for posts and is_uploaded_file
+            $posts = Image::make($image)->resize(1600,479)->save();
+            Storage::disk('public')->put('Post/'.$imageName,$posts);
         }else{
             $imageName='default.png';
         }
@@ -78,6 +78,7 @@ class PostController extends Controller
         }else{
             $post->publish = false;      
         }
+        // dd($post);
         $post->save();
 
         Toastr::success('Post Saved Successfully','Success');
